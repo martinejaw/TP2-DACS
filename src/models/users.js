@@ -1,38 +1,30 @@
 module.exports = (sequelize, DataType) => {
 
-    const Users = sequelize.define('Users', {
+    const modeloUsuarios = {
         id: {
             type: DataType.INTEGER,
-            primaryKey: true,
+            primaryKey:true,
             autoIncrement: true
         },
-        name: {
+        user: {
             type: DataType.STRING,
             allowNull: false,
-            validate:{
+            validate: {
                 notEmpty: true
             }
         },
-        password:{
+        password: {
             type: DataType.STRING,
             allowNull: false,
-            validate:{
-                notEmpty: true
-            }
-        },
-        email: {
-            type: DataType.STRING,
-            unique: true,
-            allowNull: false,
-            validate:{
+            validate: {
                 notEmpty: true
             }
         }
-    });
+    }
 
-    Users.associate = (models) => {
-        Users.hasMany(models.Tasks);
-    };
+    // NOMBRE TABLA, Y SUS FILAS
+    const Usuarios = sequelize.define('Usuarios', modeloUsuarios);
 
-    return Users;
-}
+    return Usuarios;
+
+};
