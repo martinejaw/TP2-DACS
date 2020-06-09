@@ -1,6 +1,8 @@
 <template>
   <div>
     <p> {{ messages }} </p>
+    <p> {{ error }} </p>
+
     <label for="usuario">Usuario:</label>
     <input v-model="usuario" type="text" id="usuario" name="usuario"><br><br>
     <label for="pass">Contraseña:</label>
@@ -13,8 +15,6 @@
 // @ is an alias to /src
 import axios from 'axios';
 import cfg from '../config/cfg';
-
-const val = `${cfg.API_URL},/validar`;
 
 export default {
   name: 'home',
@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     async loguear() {
-      await axios.post(val, { user: this.usuario, password: this.pass })
+      await axios.post(cfg.VAL_URL, { user: this.usuario, password: this.pass })
         .then((result) => { this.messages = result.data; })
         .catch((error) => { this.error = error.message; });
     },

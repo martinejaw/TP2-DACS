@@ -25,11 +25,11 @@ module.exports = app => {
         const user = req.body.user;
         const pass = req.body.password;
 
-        Usuarios.findOne({ where: {[Op.and]: [{ user: user, pass: pass }]} })
+        Usuarios.findOne({ where: {[Op.and]: [{ user: user, password: pass }]} })
             .then(validado => 
                 res.status(201).json(true))
             .catch(e => {
-                res.status(404).json({msg: e.message})
+                res.status(404).json(e.message)
             });
     });
 

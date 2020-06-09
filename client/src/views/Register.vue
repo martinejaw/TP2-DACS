@@ -1,11 +1,13 @@
 <template>
   <div>
     <p> {{ messages }} </p>
+    <p> {{ error }} </p>
+
     <label for="usuario">Usuario:</label>
     <input v-model="usuario" type="text" id="usuario" name="usuario"><br><br>
     <label for="pass">Contraseña:</label>
     <input v-model="pass" type="password" id="pass" name="pass"><br><br>
-    <button v-on:click="loguear">asdasd</button>
+    <button v-on:click="loguear">Registrar</button>
   </div>
 </template>
 
