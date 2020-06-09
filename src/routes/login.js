@@ -26,8 +26,13 @@ module.exports = app => {
         const pass = req.body.password;
 
         Usuarios.findOne({ where: {[Op.and]: [{ user: user, password: pass }]} })
-            .then(validado => 
-                res.status(201).json(true))
+            .then(validado => {
+                if(validado==null){
+                    res.status(201).json(false)
+                } else {
+                    res.status(201).json(true)
+                }}
+                )
             .catch(e => {
                 res.status(404).json(e.message)
             });
