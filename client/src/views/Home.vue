@@ -67,8 +67,9 @@ export default {
     usuario: '',
     nameRules: [
       (v) => !!v || 'Name is required',
-      (v) => (v && v.length >= 5) || 'Name must be more than 5 characters',
-      (v) => (v && v.length <= 10) || 'Name must be less than 10 characters',
+      (v) => (v && v.length >= 5) || 'User must be more than 5 characters',
+      (v) => (v && v.length <= 10) || 'User must be less than 10 characters',
+      (v) => (v.split(' ').length <= 1) || 'Espacios en blanco no permitidos',
     ],
     error: '',
     message: '',
@@ -76,7 +77,9 @@ export default {
     value: '',
     passwordRules: [
       (v) => !!v || 'Password is required',
+      (v) => (v.split(' ').length <= 1) || 'Espacios en blanco no permitidos',
     ],
+
     okey: null,
   }),
 

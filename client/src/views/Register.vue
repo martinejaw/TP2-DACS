@@ -36,7 +36,7 @@
       :disabled="!valid"
       color="success"
       class="mr-4"
-      @click="validate"
+      @click="registrar"
     >
       Registrarse
     </v-btn>
@@ -56,8 +56,9 @@ export default {
     usuario: '',
     nameRules: [
       (v) => !!v || 'User is required',
-      (v) => (v && v.length >= 5) || 'Name must be more than 5 characters',
-      (v) => (v && v.length <= 10) || 'Name must be less than 10 characters',
+      (v) => (v && v.length >= 5) || 'User must be more than 5 characters',
+      (v) => (v && v.length <= 10) || 'User must be less than 10 characters',
+      (v) => (v.split(' ').length <= 1) || 'Espacios en blanco no permitidos',
     ],
     error: '',
     messages: '',
@@ -65,6 +66,8 @@ export default {
     value: true,
     passwordRules: [
       (v) => !!v || 'Password is required',
+      (v) => (v && v.length >= 8) || 'User must be at least 8 characters long',
+      (v) => (v.split(' ').length <= 1) || 'Espacios en blanco no permitidos',
     ],
   }),
 
@@ -74,7 +77,7 @@ export default {
       .catch((error) => { this.error = error.message; });
   },
   methods: {
-    async loguear() {
+    async registrar() {
       await axios.post(cfg.API_URL, { user: this.usuario, password: this.pass })
         .then((result) => { this.messages = result.data; })
         .catch((error) => { this.error = error.message; });
