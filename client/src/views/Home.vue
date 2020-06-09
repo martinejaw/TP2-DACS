@@ -1,14 +1,57 @@
 <template>
-  <div>
-    <p> {{ messages }} </p>
-    <p> {{ error }} </p>
+<v-app>
+  <v-form
+    ref="form"
+    v-model="valid"
+    id="inner"
+  >
+    <h1 v-if="okey==null"></h1>
+    <h1 v-else-if="okey==true"> Logueado Correctamente </h1>
+    <h1 v-else> Las credenciales no coinciden </h1>
 
-    <label for="usuario">Usuario:</label>
-    <input v-model="usuario" type="text" id="usuario" name="usuario"><br><br>
-    <label for="pass">Contraseña:</label>
-    <input v-model="pass" type="password" id="pass" name="pass"><br><br>
-    <button v-on:click="loguear">Login</button>
-  </div>
+    <v-text-field
+      v-model="usuario"
+      :counter="10"
+      :rules="nameRules"
+      label="Usuario"
+      required
+    ></v-text-field>
+
+    <v-text-field
+      v-model="pass"
+      :rules="passwordRules"
+      label="Contraseña"
+      :append-icon="value ? 'mdi-eye' : 'mdi-eye-off'"
+      @click:append="() => (value = !value)"
+      :type="value ? 'password' : 'text'"
+      required
+    ></v-text-field>
+
+    <v-checkbox
+      v-model="checkbox"
+      :rules="[v => !!v || 'You must agree to continue!']"
+      label="Do you agree?"
+      required
+    ></v-checkbox>
+
+    <v-btn
+      :disabled="!valid"
+      color="success"
+      class="mr-4"
+      @click="validate"
+    >
+      Loguearse
+    </v-btn>
+
+    <v-btn
+      color="error"
+      class="mr-4"
+      @click="reset"
+    >
+      Olvide mi contraseña
+    </v-btn>
+  </v-form>
+  </v-app>
 </template>
 
 <script>
@@ -16,13 +59,25 @@
 import axios from 'axios';
 import cfg from '../config/cfg';
 
+
 export default {
   name: 'home',
   data: () => ({
-    error: '',
-    messages: '',
+    valid: true,
     usuario: '',
+    nameRules: [
+      (v) => !!v || 'Name is required',
+      (v) => (v && v.length >= 5) || 'Name must be more than 5 characters',
+      (v) => (v && v.length <= 10) || 'Name must be less than 10 characters',
+    ],
+    error: '',
+    message: '',
     pass: '',
+    value: '',
+    passwordRules: [
+      (v) => !!v || 'Password is required',
+    ],
+    okey: null,
   }),
 
   mounted() {
@@ -31,9 +86,9 @@ export default {
       .catch((error) => { this.error = error.message; });
   },
   methods: {
-    async loguear() {
+    async validate() {
       await axios.post(cfg.VAL_URL, { user: this.usuario, password: this.pass })
-        .then((result) => { this.messages = result.data; })
+        .then((result) => { this.okey = result.data; })
         .catch((error) => { this.error = error.message; });
     },
   },
@@ -44,5 +99,10 @@ export default {
 img {
   max-width: 300px;
   height: auto;
+}
+
+#inner {
+  width: 25%;
+  margin: 0 auto;
 }
 </style>

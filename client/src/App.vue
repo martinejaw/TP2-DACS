@@ -10,6 +10,7 @@
 </template>
 
 <style>
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -30,4 +31,8 @@
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
+@import'~bootstrap/dist/css/bootstrap.css';
+@import 'https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900';
+@import 'https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css';
 </style>
