@@ -6,7 +6,7 @@
     id="inner"
   >
     <h1 v-if="okey==null"></h1>
-    <h1 v-else-if="okey==true"> Logueado Correctamente </h1>
+    <h1 v-else-if="okey==true"> Usuario validado correctamente </h1>
     <h1 v-else> Las credenciales no coinciden </h1>
 
     <v-text-field
@@ -29,8 +29,7 @@
 
     <v-checkbox
       v-model="checkbox"
-      :rules="[v => !!v || 'You must agree to continue!']"
-      label="Do you agree?"
+      label='Mantener abierta la sesión'
       required
     ></v-checkbox>
 
@@ -66,17 +65,17 @@ export default {
     valid: true,
     usuario: '',
     nameRules: [
-      (v) => !!v || 'Name is required',
-      (v) => (v && v.length >= 5) || 'User must be more than 5 characters',
-      (v) => (v && v.length <= 10) || 'User must be less than 10 characters',
+      (v) => !!v || 'Usuario requerido',
+      (v) => (v && v.length >= 5) || 'Usuario debe contener mas de 5 caracteres',
+      (v) => (v && v.length <= 10) || 'Usuario debe contener menos de 10 caracteres',
       (v) => (v.split(' ').length <= 1) || 'Espacios en blanco no permitidos',
     ],
     error: '',
     message: '',
     pass: '',
-    value: '',
+    value: true,
     passwordRules: [
-      (v) => !!v || 'Password is required',
+      (v) => !!v || 'Contraseña requerida',
       (v) => (v.split(' ').length <= 1) || 'Espacios en blanco no permitidos',
     ],
 

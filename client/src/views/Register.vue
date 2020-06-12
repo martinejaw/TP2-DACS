@@ -5,6 +5,7 @@
     v-model="valid"
     id="inner"
   >
+    <h3> {{ message }} </h3>
     <v-text-field
       v-model="usuario"
       :counter="10"
@@ -18,7 +19,7 @@
       :rules="passwordRules"
       label="Contraseña"
 
-      hint="Your password passed! Password rules are not meant to be broken!"
+      hint="Tu contraseña es segura!"
       :append-icon="value ? 'mdi-eye' : 'mdi-eye-off'"
       @click:append="() => (value = !value)"
       :type="value ? 'password' : 'text'"
@@ -27,8 +28,8 @@
 
     <v-checkbox
       v-model="checkbox"
-      :rules="[v => !!v || 'You must agree to continue!']"
-      label="Do you agree?"
+      :rules="[v => !!v || 'Debes aceptarlas para registrarte']"
+      label="Acepto las condiciones de uso"
       required
     ></v-checkbox>
 
@@ -55,18 +56,18 @@ export default {
     valid: true,
     usuario: '',
     nameRules: [
-      (v) => !!v || 'User is required',
-      (v) => (v && v.length >= 5) || 'User must be more than 5 characters',
-      (v) => (v && v.length <= 10) || 'User must be less than 10 characters',
+      (v) => !!v || 'Usuario requerido',
+      (v) => (v && v.length >= 5) || 'Usuario debe contener mas de 5 caracteres',
+      (v) => (v && v.length <= 10) || 'Usuario debe contener menos de 10 caracteres',
       (v) => (v.split(' ').length <= 1) || 'Espacios en blanco no permitidos',
     ],
     error: '',
-    messages: '',
+    message: '',
     pass: '',
     value: true,
     passwordRules: [
-      (v) => !!v || 'Password is required',
-      (v) => (v && v.length >= 8) || 'User must be at least 8 characters long',
+      (v) => !!v || 'Contraseña requerida',
+      (v) => (v && v.length >= 8) || 'Contraseña debe contener al menos 8 caracteres',
       (v) => (v.split(' ').length <= 1) || 'Espacios en blanco no permitidos',
     ],
   }),
@@ -79,7 +80,7 @@ export default {
   methods: {
     async registrar() {
       await axios.post(cfg.API_URL, { user: this.usuario, password: this.pass })
-        .then((result) => { this.messages = result.data; })
+        .then((result) => { this.message = result.data; })
         .catch((error) => { this.error = error.message; });
     },
   },

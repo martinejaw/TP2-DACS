@@ -17,24 +17,23 @@ module.exports = app => {
             .then(usuarioCreado => 
                 res.status(201).json(usuarioCreado))
             .catch(e => {
-                res.status(404).json({msg: e.message})
+                res.status(500).json({msg: e.message})
             });
     });
 
     router.post('/validar', cors(), (req, res) => {
         const user = req.body.user;
         const pass = req.body.password;
-
         Usuarios.findOne({ where: {[Op.and]: [{ user: user, password: pass }]} })
             .then(validado => {
                 if(validado==null){
-                    res.status(201).json(false)
+                    res.status(200).json(false)
                 } else {
-                    res.status(201).json(true)
+                    res.status(200).json(true)
                 }}
                 )
             .catch(e => {
-                res.status(404).json(e.message)
+                res.status(500).json(e.message)
             });
     });
 
